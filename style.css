@@ -1,0 +1,273 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            border-radius: 2px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "✿";
+            position: absolute;
+            right: -35px;
+            top: 0;
+            color: #f1c40f;
+            transform: rotate(30deg);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin-top: 15px;
+            max-width: 600px;
+            margin: 15px auto 0;
+            line-height: 1.6;
+        }
+        
+        .intro {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .uplosd-form{
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* ​​display: grid;​​将元素设置为网格布局容器。
+​        ​grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));​​定义网格的列。这里使用了一个复杂的值：
+        repeat()：重复列定义。
+        auto-fill：自动填充尽可能多的列，同时保持每列的最小宽度。
+        minmax(320px, 1fr)：每列的最小宽度为320px，最大宽度为1fr（可用空间的等分）。这意味着：
+        如果容器宽度足够，会自动排列多列（每列至少320px）。
+        如果容器宽度缩小，列数会减少（响应式）。
+        每列宽度在640px和等分空间之间自适应。
+​​        gap: 30px;​​设置网格项之间的间隙为30px（包括行间隙和列间隙） */
+        .collections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(640px, 1fr));
+            gap: 50px;
+        }
+        /* 设置网格的样式：圆角*/
+        .collection {
+            background: rgba(30, 40, 60, 0.6);
+            border-radius: 15px;
+            overflow: visible;  /*visible允许内容超出边框*/
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 悬停效果 悬停时网格放大1.02倍 */
+        .collection:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .collection h2 {
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            padding: 15px 20px;
+            font-size: 1.8rem;
+            text-align: center;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .collection h2::before {
+            content: "❖";
+            margin-right: 10px;
+            font-size: 1.4rem;
+            color: #f1c40f;
+        }
+        
+        .image-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        /* ​aspect-ratio: 16/9;​作用​​：设置元素的宽高比
+​​效果​​：强制元素保持3:4的比例（宽度:高度） */
+        .img-card {
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+        }
+        
+        .img-card:hover {
+            transform: translateY(-5px) scale(1.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        
+        .img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .img-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: #bdc3c7;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .img-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+        
+        .link-section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .link-section ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .link-section li {
+            margin: 15px 0;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .link-section li::before {
+            content: "➤";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-size: 1.2rem;
+        }
+        
+        .link-section a {
+            color: #3498db;
+            text-decoration: none;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .link-section a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+        
+        .link-section a:hover {
+            color: #f1c40f;
+        }
+        
+        .link-section a:hover::after {
+            width: 100%;
+            background: #f1c40f;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .attribution {
+            opacity: 0.7;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .collections {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫图片横向展示馆</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: white;
+            min-height: 100vh;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            border-radius: 2px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "✿";
+            position: absolute;
+            right: -35px;
+            top: 0;
+            color: #f1c40f;
+            transform: rotate(30deg);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin-top: 15px;
+            max-width: 600px;
+            margin: 15px auto 0;
+            line-height: 1.6;
+        }
+        
+        .intro {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .collections {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .collection {
+            background: rgba(30, 40, 60, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+        
+        .collection:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .collection-header {
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .collection h2 {
+            font-size: 1.8rem;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .collection h2::before {
+            content: "❖";
+            margin-right: 10px;
+            font-size: 1.4rem;
+            color: #f1c40f;
+        }
+        
+        .scroll-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .scroll-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .image-row {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #3498db rgba(30, 40, 60, 0.6);
+            scroll-behavior: smooth;
+        }
+        
+        .image-row::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .image-row::-webkit-scrollbar-track {
+            background: rgba(30, 40, 60, 0.6);
+            border-radius: 4px;
+        }
+        
+        .image-row::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 4px;
+        }
+        
+        .image-row::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+        
+        .img-card {
+            border-radius: 10px;
+            overflow: hidden;
+            width: 280px;
+            height: 380px;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+        }
+        
+        .img-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        
+        .img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .img-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .img-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 15px;
+            color: white;
+            transform: translateY(40px);
+            transition: transform 0.3s ease;
+        }
+        
+        .img-card:hover .img-info {
+            transform: translateY(0);
+        }
+        
+        .img-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .img-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .link-section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .link-section ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .link-section li {
+            margin: 15px 0;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .link-section li::before {
+            content: "➤";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-size: 1.2rem;
+        }
+        
+        .link-section a {
+            color: #3498db;
+            text-decoration: none;
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .link-section a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+        
+        .link-section a:hover {
+            color: #f1c40f;
+        }
+        
+        .link-section a:hover::after {
+            width: 100%;
+            background: #f1c40f;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .attribution {
+            opacity: 0.7;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .img-card {
+                width: 220px;
+                height: 300px;
+            }
+            
+            .collection-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .scroll-controls {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>动漫图片横向展示馆</h1>
+            <p class="subtitle">精选人气动漫美图合集，横向滚动浏览您的收藏！</p>
+        </header>
+        
+        <section class="intro">
+            <p>这里是一个动漫爱好者的图片分享空间，采用横向滚动布局展示包括《鬼灭之刃》、《刺客567》等热门动漫的精美图片。使用左右箭头或直接滚动浏览您的收藏！</p>
+        </section>
+        
+        <section class="link-section">
+            <h2>我的精选树图</h2>
+            <ul>
+                <li><a href="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" target="_blank">自然之树 - Pixabay超清图片</a></li>
+            </ul>
+        </section>
+        
+        <section class="collections">
+            <div class="collection">
+                <div class="collection-header">
+                    <h2>鬼灭之刃</h2>
+                    <div class="scroll-controls">
+                        <button class="scroll-btn left-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="scroll-btn right-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="image-row" id="gui-row">
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779577-555de3c7c6e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">炭治郎</div>
+                            <div class="img-desc">主角的坚毅眼神</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779640-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">祢豆子</div>
+                            <div class="img-desc">可爱的鬼化少女</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779653-8d3e0b4d0b0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">我妻善逸</div>
+                            <div class="img-desc">雷之呼吸使用者</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779662-9e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">嘴平伊之助</div>
+                            <div class="img-desc">野猪头套剑士</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779670-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">炼狱杏寿郎</div>
+                            <div class="img-desc">炎柱的英姿</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779680-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="鬼灭之刃">
+                        <div class="img-info">
+                            <div class="img-title">富冈义勇</div>
+                            <div class="img-desc">水柱的冷静</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="collection">
+                <div class="collection-header">
+                    <h2>刺客567</h2>
+                    <div class="scroll-controls">
+                        <button class="scroll-btn left-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="scroll-btn right-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="image-row" id="assassin-row">
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779690-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">伍六七</div>
+                            <div class="img-desc">失忆的主角</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779700-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">梅花十三</div>
+                            <div class="img-desc">冷艳的女刺客</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779710-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">鸡大保</div>
+                            <div class="img-desc">可靠的伙伴</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779720-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">小飞鸡</div>
+                            <div class="img-desc">可爱的小帮手</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779730-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">斯特国王子</div>
+                            <div class="img-desc">科技的力量</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779740-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">赤牙</div>
+                            <div class="img-desc">血魔的恐怖</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779750-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">江主任</div>
+                            <div class="img-desc">纯净协会领袖</div>
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <img src="https://images.unsplash.com/photo-1635189779760-0e0e4b5d6e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="刺客567">
+                        <div class="img-info">
+                            <div class="img-title">何大春</div>
+                            <div class="img-desc">金刚不坏之身</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p class="attribution">本页面用于展示动漫爱好者收藏，所有版权属于原作者</p>
+        </footer>
+    </div>
+
+    <script>
+        // 为每个集合添加滚动功能
+        document.querySelectorAll('.collection').forEach(collection => {
+            const row = collection.querySelector('.image-row');
+            const leftBtn = collection.querySelector('.left-btn');
+            const rightBtn = collection.querySelector('.right-btn');
+            
+            leftBtn.addEventListener('click', () => {
+                row.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            
+            rightBtn.addEventListener('click', () => {
+                row.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+            
+            // 鼠标悬停时显示滚动条
+            row.addEventListener('mouseenter', () => {
+                row.style.scrollbarWidth = 'thin';
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                row.style.scrollbarWidth = 'thin';
+            });
+        });
+        
+        // 添加键盘左右键滚动支持
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                document.querySelector('.image-row').scrollBy({ left: -300, behavior: 'smooth' });
+            } else if (e.key === 'ArrowRight') {
+                document.querySelector('.image-row').scrollBy({ left: 300, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
