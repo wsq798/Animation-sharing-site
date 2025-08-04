@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        var user = {
+            name: "xiaoming",
+            age: 20
+
+        }
+
+        const { name, age } = user;
+        const { log } = console;
+        log(name, age);
+        console.log("------------------");
+
+        const { abs, floor, random } = Math;
+        log(random());
+
+        console.log("------------------");
+        var str = "hello";
+        for (let i of str) {
+            console.log(i);
+        }
+        for (var i = 0; i < str.length; i++) {
+            console.log(str[i]);
+        }
+        console.log("------------------");
+
+        //动态创建一个a标签，a标签href属性也是动态的
+        var href = "https://baidu.com";
+        var text = "百度";
+        //当我向动态页面写入标签时，标签的数据一般来源于服务器
+        var baidu = " <a href=>' " + href + " '> " + text + " </a> ";
+        console.log(baidu);
+        console.log("------------------");
+
+        //字符串模板
+        var baidu1 = ` <a href="${href}">${text}</a> `
+        console.log(baidu1);
+        console.log("------------------");
+
+        var allstr = "helloworld"
+        var str = "world";
+
+        console.log(allstr.includes(str));  //true  表示是否找到了参数字符串
+        console.log(allstr.startsWith(str)); //false 参数字符串是否在原字符串的头部
+        console.log(allstr.endsWith(str)); //true  参数字符串是否在原字符串的尾部
+        console.log("------------------");
+
+        var x = "wsq"
+        console.log(x.repeat(3)); //打印3次：wsqwsqwsq
+        console.log("------------------");
+
+        var y = "hello";
+        console.log(y.padStart(10, "absd"));   //在头部补全字符串：absdahello
+        console.log(y.padEnd(10, "absd"));     //在尾部补全字符串：helloabsda
+        console.log("------------------");
+
+        //trim()方法 消除空格
+        var w = "  wsqwsqwws "
+        console.log(w.trim());
+        //trimStart() 消除头部空格
+        console.log(w.trimStart());
+        //trimEnd() 消除尾部空格
+        console.log(w.trimEnd());
+        console.log("------------------");
+
+        //at()方法 ：接受一个整数作为参数，返回参数指定位置的字符，支持负索引
+        const str1 = 'hello'
+        console.log(str1.at(1));
+        console.log(str1.at(-1));
+        console.log("------------------");
+
+        var arr = [12, 67, 98, 99, 34];
+        //打印数组 方法1
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+        }
+        //方法2
+        console.log(...arr);
+
+        //求最大值
+        console.log(Math.max.apply(null, arr));
+        console.log(Math.max(...arr));
+        
+        //合并数组
+        var arr1 = [12, 11, 10];
+        var arr2 = [44, 45, 67];
+        console.log(arr1.concat(arr2));
+        console.log(...arr1, ...arr2);
+        console.log("-----------------");
+
+        //方法一：
+        function fn1() {
+        }
+        //方法二：
+        var fn2 = function (x, y) {
+            return x + y;
+        }
+        //方法三：箭头函数=>
+        var fn3 = (x, y) => x + y;
+        console.log(fn3(10,20));
+        console.log("-----------------");
+        
+        //map()方法，接受一个函数作为参数，遍历数组，并将函数的返回值作为新的数组元素
+        var arr3 = [12,2,10];
+        arr3.map(function(element,index){
+            console.log(element);
+        })
+
+        arr3.map((element,index) => {
+            console.log(element);
+        })
+        console.log("-----------------");
+
+        //set()，本身是一个构造函数，类似于数组，成员值都是 唯一 的
+        var s = new Set();
+        var arr9 = [12,13,14,15,16];
+        arr9.forEach(x => s.add(x)); //遍历数组，并将数组中的元素添加到set中
+        console.log(s);
+        
+        var arr10 = [10,20,30,40,50];
+        var q = new Set(arr10);
+        console.log([...q]);
+
+        console.log([...new Set(arr10)]);
+        console.log([...new Set("sfdsf")].join("")); //返回字符串的唯一字符，并用空格连接
+        console.log("-----------------");
+
+        //has()方法，判断set中是否有某个元素
+        var s1 = new Set([12,13,14,15,16]);
+        console.log(s1.has(12)); //true
+        console.log(s1.has(17)); //false
+
+        //delete()方法，删除set中的某个元素
+        s1.delete(12);
+        console.log(s1);
+
+        //clear()方法，清空set
+        s1.clear();
+        console.log(s1);
+        console.log("-");
+
+
+
+        
+        
+        
+         
+
+    </script>
+
+</body>
+
+</html>

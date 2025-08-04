@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        padding: 10px;
+        margin: 20px;
+        border: 5px solid black;
+    }
+
+    h3 {
+        height: 500px;
+
+    }
+</style>
+
+<body>
+    <div class="box" id="box">hhh</div>
+    <h3>hhhh</h3>
+    <h3>wwww</h3>
+    <h3>qqqq</h3>
+
+    <script>
+        /*
+        clientHeight: 获取元素的高度，包括padding和border，不包括margin
+        clientWidth: 获取元素的宽度，包括padding和border，不包括margin
+
+        scrollHeight: 获取元素的总高度，包括padding、border、内容、margin
+        scrollWidth: 获取元素的总宽度，包括padding、border、内容、margin
+        */
+
+        var box = document.getElementById("box");
+        document.writeln(box.clientHeight);//获取元素的高度
+        document.writeln(box.clientWidth);//获取元素的宽度
+
+        console.log(document.documentElement.clientHeight);//获取页面的高度
+        console.log(document.body.clientHeight);//获取body的高度
+
+        console.log("--------------------");
+
+        //scrollTop: 获取或设置元素的滚动条到顶部的距离
+        //scrollLeft: 获取或设置元素的滚动条到左侧的距离
+        console.log(document.documentElement.scrollTop);
+        console.log(document.documentElement.scrollLeft);
+        console.log("--------------------");
+
+        // offsetHeight: 获取元素的高度，包括padding、border、内容、margin
+        // offsetWidth: 获取元素的宽度，包括padding、border、内容、margin
+        console.log(box.offsetHeight);
+        console.log(box.offsetWidth);
+        console.log("------------------");
+
+        // offsetTop: 获取元素相对于其父级上边界的间距
+        // offsetLeft: 获取元素相对于其父级左边界的间距
+        console.log(box.offsetLeft);
+        console.log(box.offsetTop);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax</title>
+</head>
+
+<body>
+
+    <script>
+        // 创建一个 XMLHttpRequest 对象
+        const getJson = function (url) {
+            const promise = new Promise(function (resolve, reject) {
+                //异步操作：网络请求代码
+                const handle = function () {
+                    if (this.readyState !== 4) {
+                        return;
+                    } else if (this.status === 200) {
+                        resolve(this.response);
+                    } else {
+                        reject(new Error(this.statusText));
+                    }
+                }
+                //XMLHttpRequest 对象：这是原生 JavaScript 中用于实现 AJAX（异步 HTTP 请求）的核心对象，
+                // 代码中通过它向指定 API 发送 GET 请求。
+                const client = new XMLHttpRequest();
+
+                client.open('GET', url);
+                client.onreadystatechange = handle;
+
+                // 设置响应数据的类型为 JSON    
+                // 设置后，当请求完成时，this.response 将会是一个解析好的JavaScript对象，而不是字符串。
+                client.responseType = 'json';
+
+                // 设置请求头，设置客户端接受JSON格式的响应
+                client.setRequestHeader('Accept', 'application/json');
+
+                // 发送请求
+                client.send();
+            })
+            return promise;
+        }
+
+        // 调用 getJson 函数，并传入一个 URL 参数
+        getJson('https://jsonplaceholder.typicode.com/todos/1')
+            .then(function (data) {
+                console.log(data);
+            }, function (error) {
+                console.log(error);
+            })
+    </script>
+</body>
+
+</html>

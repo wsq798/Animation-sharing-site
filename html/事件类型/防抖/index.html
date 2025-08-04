@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖和节流</title>
+</head>
+<style>
+    h3 {
+        height: 500px;
+    }
+</style>
+
+<body>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+    <h3>hhh</h3>
+
+
+    <script>
+        /*
+        //防抖：用于优化高频触发的事件处理
+        function debounce(fn, delay) {
+            var timer = null;
+            return function () {
+                if (timer) {
+                    clearTimeout(timer); //清除上一次计时器
+                }
+                timer = setTimeout(fn, delay); //重新设计计时器
+            }
+        }
+        window.onscroll = debounce(scrollHandel, 200);
+        function scrollHandel() {
+            var scrollTop = document.documentElement.scrollTop; //获取页面滚动的垂直距离
+            console.log('滚动条位置' + scrollTop);
+
+        }
+            */
+
+        // 防抖：在延迟时间内重复触发会重置计时器，最终只执行一次。
+        // 节流：固定时间间隔执行一次，限制执行频率（例如每秒最多执行一次）
+
+        function throttle(fn, delay) {
+            let valid = true;
+            return function () {
+                if (!valid) {
+                    return false;
+                }
+                valid = false;
+                setTimeout(function () {
+                    fn();
+                    valid = true;
+                }, delay)
+            }
+        }
+        window.onscroll = throttle(scrollHandel, 2000);
+        function scrollHandel() {
+            var scrollTop = document.documentElement.scrollTop; //获取页面滚动的垂直距离
+            console.log('滚动条位置' + scrollTop);
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        var num = 20 ;
+        var str = "hello world";
+        var arr = [1,2,3,4,5];
+        var obj = {};
+        var bool = true;
+
+        console.log(typeof num);
+        console.log(typeof str);
+        console.log(typeof arr);
+        console.log(typeof obj);
+        console.log(typeof bool);
+
+        var sum = 0;
+        for(var i=0;i<101;i++){
+            sum += i;
+        }
+        console.log(sum);
+
+        var num1;
+        for(var i=0;i<=100;i++){
+            if(i%2 != 0){
+                num1 = i;
+            }
+            
+        }
+        console.log(num1);
+
+        for(var i=1;i<=9;i++){
+            document.write("<br>");
+            for(var j=1;j<=i;j++){
+                sum = i * j;
+                document.write(j + "*" + i + "=" + sum + " " );
+                
+            }
+        }
+
+        var arr = ["apple","banana","orange","grape","pear"];
+        for(let i=0;i<arr.length;i++){
+            console.log(arr[i]);
+        }
+        console.log(Array.isArray(arr));
+
+        //push() 方法用于在数组的末尾添加一个或多个元素，并返回该数组的新长度。
+        var arr1 = [1,2,3];
+        arr1.push(4,5,6);
+        console.log(arr1);
+
+        //pop() 方法用于删除数组的最后一个元素，并返回该元素的值。
+        arr1.pop();
+        console.log(arr1);
+        
+        
+        //shift() 方法用于删除数组的第一个元素，并返回该元素的值。
+        var arr2 = ["wusongqiang","zhangming","xiaobai"]
+        arr2.shift();
+        console.log(arr2);
+
+        //循环删除数组元素
+        var item;
+        while(item=arr2.shift()){
+            console.log(item);
+        }
+        console.log(arr2);
+
+
+        //unshift() 方法用于在数组的开头添加一个或多个元素，并返回该数组的新长度。
+        arr2.unshift("wusongqiang");
+        console.log(arr2);
+
+
+        //join()方法以指定参数作为分隔符，用于将数组中的所有元素连接成一个字符串。
+        var arr3 = [1,2,3,4,5];                 //数组转字符串
+        // arr3 = arr3.join("\\");
+        // console.log(arr3);
+
+        arr3 = arr3.join("--");
+        console.log(arr3);
+
+        //split() 方法用于将一个字符串分割成字符串数组。  字符串转数组
+        var arr4 = ["hello world","how"];
+        var str = arr4.join("")
+        console.log(str);
+        console.log(str.split(""));
+
+        //concat() 方法用于连接两个或多个数组，并返回一个新数组。
+        var arr5 = ["xiaoming","lili"];
+        var arr6 = ["wusongqiang","zhangming"];
+        console.log(arr5.concat(arr6));
+
+        //reverse() 方法用于颠倒数组中元素的顺序。
+        arr6.reverse();
+        console.log(arr6);
+        */
+
+        var arr = [1,2,3,4,5];
+        var str = "hello world" 
+        var myArr = str.split("");
+        myArr.reverse();
+        console.log(myArr.join(""));
+
+        //indexof() 方法用于查找数组中指定元素的第一个出现位置，如果不存在，则返回 -1。
+        var arr1 = [1,2,3,4,5,6,7,8,9];
+        console.log(arr1.indexOf(5));
+        console.log(arr1.indexOf(99));
+        if(arr1.indexOf(5) > -1){
+            console.log("存在");
+        }else{
+            console.log("不存在");
+        }
+        
+</script>
+</html>

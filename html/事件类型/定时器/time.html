@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<style>
+    #someDiv{
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        opacity: 1;
+    }
+
+</style>
+<body>
+    <div id="someDiv">定时器</div>
+    
+    <script>
+        var timer = setTimeout(function(){
+        console.log("我将在3s后执行");
+    },3000)
+    //取消定时器
+    clearTimeout(timer);
+
+    var name = "wsq";
+    var user={
+        name:"xiaoming",
+        getName:function(){
+            //console.log(this.name); //输出xiaoming
+
+            setTimeout(function(){
+                //this指向本地
+                console.log(this.name);//输出wsq
+            },1000)
+        }
+    }
+    user.getName();
+
+    //setInterval 每隔一段时间执行一次
+    var i = 0;
+    var settime = setInterval(function(){
+        i++;
+       document.writeln(i);
+    },200)
+
+    //动画效果 方块逐渐消失
+    var someDiv = document.getElementById("someDiv");
+
+    var opacity = 1; //透明度设置为1
+    var fade = setInterval(function(){
+        if(opacity > 0){
+            opacity -= 0.05;
+            someDiv.style.opacity = opacity;
+        }else{
+            clearInterval(fade);
+        }
+    },60)
+
+    </script>
+</body>
+</html>

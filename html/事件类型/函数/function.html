@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //创建一个对象
+        var user = {
+            name: "wusongqiang",
+            age:23,
+            gender: "man",
+            email:"1651739550@qq.com",
+            password:123456,
+            address:"湖南长沙"
+        }
+
+        //调用对象：对象名.属性名
+        console.log(user.name);
+
+        //math函数
+        console.log(Math.max(1,2,3,4,5));//最大值
+        console.log(Math.min(1,2,3,4,5));//最小值
+        console.log(Math.ceil(1.2));//向上取整
+        console.log(Math.floor(1.2));//向下取整
+        console.log(Math.abs(-10));//绝对值
+        console.log(Math.PI);//圆周率
+        console.log(Math.random());//随机数
+
+        
+        function getmain(min,max){
+            var result = Math.random() * (max - min);
+            result = Math.floor(result);
+            console.log(result);
+        }
+
+        getmain(1,10);
+
+
+
+        //日期函数
+        console.log(Date.now());//1753094401699
+
+        console.log(new Date());
+        
+        console.log(new Date().getFullYear());//获取当前年份
+        console.log(new Date().getMonth() + 1);//获取当前月份
+        console.log(new Date().getDate());//获取当前日期
+        console.log(new Date().getHours());//获取当前小时
+        console.log(new Date().getMinutes());//获取当前分钟
+        console.log(new Date().getDay());//获取星期几
+
+
+    //阳历
+    function leftDays(){
+    // 1. 获取当前日期和时间
+    var today = new Date();
+
+    // 2. 创建本年最后一天的日期对象（12月31日 00:00:00）
+    var endYear = new Date(today.getFullYear(), 11, 31, 0, 0, 0, 0);
+
+    // 3. 计算一天的毫秒数（24小时 × 60分钟 × 60秒 × 1000毫秒）
+    var msPerDay = 24 * 60 * 60 * 1000;
+
+    // 4. 计算剩余天数：(年末毫秒数 - 当前毫秒数) ÷ 每天的毫秒数
+    var result = (endYear.getTime() - today.getTime()) / msPerDay;
+
+    // 5. 向下取整并打印结果（忽略小数部分）
+    console.log(Math.floor(result));
+}
+
+// 调用函数执行计算
+leftDays();
+
+    </script>
+</body>
+</html>

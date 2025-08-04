@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box{
+        width: 100px;
+        height: 100px;
+    }
+    .box2{
+        background-color: red;
+    }
+    
+</style>
+<body>
+    <div class="box" id="root">Hello</div>
+    <script>
+        var box1 = document.getElementById("root");
+        box1.id = "roots"
+
+        box1.className = "box box2";
+
+        console.log(box1.classList.add("box3"));//添加box3类名
+        console.log(box1.classList.remove("box"));//删除box类名
+        if(box1.classList.contains("box2")){//判断是否包含box2类名
+            console.log("you");
+        }else{
+            console.log("meiyou");
+        }
+        box1.classList.toggle("wsq"); //添加或删除wsq类名
+
+        box1.innerHTML = "world"; //修改内容
+
+        var str = "<a href='#'>太阳</a>";
+        box1.innerHTML = str; //修改内容，包含html标签
+
+        box1.innerText= str ; //修改内容，不包含html标签
+        
+    </script>
+</body>
+</html>

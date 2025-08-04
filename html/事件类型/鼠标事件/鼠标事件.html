@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标事件演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(30, 40, 60, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+        }
+
+        .description {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .event-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #f1c40f;
+        }
+
+        .event-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .event-indicator {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .event-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #3498db, #9b59b6);
+            transition: width 0.5s ease;
+        }
+
+        .root {
+            width: 100%;
+            height: 200px;
+            background-color: rgba(95, 158, 160, 0.3);
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        .box1 {
+            background-color: rgba(231, 76, 60, 0.7);
+        }
+
+        .box2 {
+            background-color: rgba(46, 204, 113, 0.7);
+        }
+
+        .box3 {
+            background-color: rgba(52, 152, 219, 0.7);
+        }
+
+        .box4 {
+            background-color: rgba(155, 89, 182, 0.7);
+        }
+
+        .box5 {
+            background-color: rgba(241, 196, 15, 0.7);
+        }
+
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #f1c40f;
+        }
+
+        .log-content {
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        .highlight {
+            animation: highlight 1s ease;
+        }
+
+        @keyframes highlight {
+            0% {
+                background-color: rgba(241, 196, 15, 0.5);
+            }
+
+            100% {
+                background-color: transparent;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>鼠标事件演示</h1>
+            <p>探索各种鼠标事件的行为和区别</p>
+        </header>
+
+        <div class="description">
+            <p>此页面演示了JavaScript中的各种鼠标事件。点击或悬停在下面的卡片上查看事件触发效果。</p>
+        </div>
+
+        <div class="event-container">
+            <div class="event-card" id="btn1">
+                <div class="event-title">单击 (click)</div>
+                <div class="event-description">鼠标左键单击时触发</div>
+                <div class="event-indicator">
+                    <div class="event-progress" id="progress1"></div>
+                </div>
+            </div>
+
+            <div class="event-card" id="btn2">
+                <div class="event-title">双击 (dblclick)</div>
+                <div class="event-description">鼠标左键快速双击时触发</div>
+                <div class="event-indicator">
+                    <div class="event-progress" id="progress2"></div>
+                </div>
+            </div>
+
+            <div class="event-card" id="btn3">
+                <div class="event-title">鼠标按下 (mousedown)</div>
+                <div class="event-description">鼠标按钮被按下时触发</div>
+                <div class="event-indicator">
+                    <div class="event-progress" id="progress3"></div>
+                </div>
+            </div>
+
+            <div class="event-card" id="btn4">
+                <div class="event-title">鼠标抬起 (mouseup)</div>
+                <div class="event-description">鼠标按钮被释放时触发</div>
+                <div class="event-indicator">
+                    <div class="event-progress" id="progress4"></div>
+                </div>
+            </div>
+
+            <div class="event-card" id="btn5">
+                <div class="event-title">鼠标移动 (mousemove)</div>
+                <div class="event-description">鼠标在元素上移动时触发</div>
+                <div class="event-indicator">
+                    <div class="event-progress" id="progress5"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="root">
+            <div class="box box1" id="btn6">
+                <div>鼠标进入<br>(mouseenter)</div>
+            </div>
+
+            <div class="box box2" id="btn7">
+                <div>鼠标离开<br>(mouseleave)</div>
+            </div>
+
+            <div class="box box3" id="btn8">
+                <div>鼠标进入<br>(mouseover)</div>
+            </div>
+
+            <div class="box box4" id="btn9">
+                <div>鼠标离开<br>(mouseout)</div>
+            </div>
+
+            <div class="box box5" id="btn10">
+                <div>鼠标滚轮<br>(wheel)</div>
+            </div>
+        </div>
+
+        <div class="log-container">
+            <div class="log-title">事件日志</div>
+            <div class="log-content" id="event-log"></div>
+        </div>
+
+        <footer>
+            <p>鼠标事件演示 | 优化版</p>
+        </footer>
+    </div>
+
+    <script>
+        // 获取所有元素
+        const btn1 = document.getElementById("btn1");
+        const btn2 = document.getElementById("btn2");
+        const btn3 = document.getElementById("btn3");
+        const btn4 = document.getElementById("btn4");
+        const btn5 = document.getElementById("btn5");
+        const btn6 = document.getElementById("btn6");
+        const btn7 = document.getElementById("btn7");
+        const btn8 = document.getElementById("btn8");
+        const btn9 = document.getElementById("btn9");
+        const btn10 = document.getElementById("btn10");
+        const eventLog = document.getElementById("event-log");
+
+        // 事件日志函数
+        function logEvent(eventName, element) {
+            const timestamp = new Date().toLocaleTimeString();
+            eventLog.textContent += `[${timestamp}] ${eventName} 在 ${element.id}\n`;
+            eventLog.scrollTop = eventLog.scrollHeight;
+
+            // 高亮显示元素
+            element.classList.add('highlight');
+            setTimeout(() => element.classList.remove('highlight'), 1000);
+        }
+
+        // 进度条动画函数
+        function animateProgress(elementId) {
+            const progress = document.getElementById(elementId);
+            progress.style.width = '100%';
+            setTimeout(() => progress.style.width = '0', 500);
+        }
+
+        // 单击鼠标事件
+        btn1.onclick = function (e) {
+            logEvent("单击事件", this);
+            animateProgress("progress1"); // 进度条动画
+        }
+
+        // 双击鼠标事件
+        btn2.ondblclick = function (e) {
+            logEvent("双击事件", this);
+            animateProgress("progress2");
+        }
+
+        // 鼠标按下事件
+        btn3.onmousedown = function (e) {
+            logEvent("鼠标按下", this);
+            animateProgress("progress3");
+        }
+
+        // 鼠标抬起事件
+        btn4.onmouseup = function (e) {
+            logEvent("鼠标抬起", this);
+            animateProgress("progress4");
+        }
+
+        // 鼠标移动事件
+        btn5.onmousemove = function (e) {
+            logEvent("鼠标移动", this);
+            animateProgress("progress5");
+        }
+
+        // 鼠标进入事件 (mouseenter)
+        btn6.onmouseenter = function (e) {
+            logEvent("鼠标进入 (mouseenter)", this);// 鼠标进入元素时触发
+        }
+
+        // 鼠标离开事件 (mouseleave)
+        btn7.onmouseleave = function (e) {
+            logEvent("鼠标离开 (mouseleave)", this);
+        }
+
+        // 鼠标进入事件 (mouseover)
+        btn8.onmouseover = function (e) {
+            logEvent("鼠标进入 (mouseover)", this);
+        }
+
+        // 鼠标离开事件 (mouseout)
+        btn9.onmouseout = function (e) {
+            logEvent("鼠标离开 (mouseout)", this);
+        }
+
+        // 鼠标滚轮事件
+        btn10.onwheel = function (e) {
+            logEvent("鼠标滚轮", this);
+            e.preventDefault(); // 防止页面滚动
+        }
+
+        // 初始日志消息
+        eventLog.textContent = "等待鼠标事件...\n";
+    </script>
+</body>
+
+</html>

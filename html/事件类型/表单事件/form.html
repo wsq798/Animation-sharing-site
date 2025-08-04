@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单事件</title>
+</head>
+
+<body>
+    <input type="text" id="username"> 用户名
+    <input type="text" id="password"> 密码
+    <form id="myForm" onsubmit="submitHandle()">
+        <input type="text"> 表单事件<br>
+        <button type="reset" id="resetbtn">重置</button>
+        <button>提交表单</button>
+    </form>
+
+    <!-- 点击li标签生效 -->
+    <ul id="list">
+        <li>事件1</li>
+        <li>事件2</li>
+        <li>事件3</li>
+        <li>事件4</li>
+        <p>哈哈哈哈哈哈</p>
+    </ul>
+
+
+    <script>
+        var username = document.getElementById("username");
+        var password = document.getElementById("password");
+
+        //oninput 连续触发读取数据
+        username.oninput = function (e) {
+            console.log(e.target.value);
+        }
+        //onselect 选中数据
+        username.onselect = function (e) {
+            console.log("选中了");
+        }
+
+        //onchange 与oninput类似，但是不会连续触发，回车或失去焦点后触发
+        password.onchange = function (e) {
+            console.log(e.target.value);  //
+        }
+
+
+        //onreset 重置表单
+        var myForm = document.getElementById("myForm");
+        var resetbtn = document.getElementById("resetbtn");
+
+        resetbtn.onclick = function (e) {
+            myForm.reset();
+        }
+
+        //提交表单
+        function submitHandle() {
+            console.log("提交");
+            return false; //阻止默认提交表单行为
+        }
+
+        //事件代理 ：父元素系统处理子元素事件
+        var list = document.getElementById("list");
+        // list.onclick = function(){
+        //     console.log("被点击了");
+        // }
+
+        //toLowerCase()转换成小写
+        list.addEventListener("click", function (e) {
+            if (e.target.tagName === "LI") {
+                console.log(e.target.innerHTML);
+
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
